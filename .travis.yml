@@ -36,8 +36,8 @@ install:
 
 script:
     - cd tests
-    - nosetests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_xraylarch_4b2b13697d_1
-    - python -m properform Push 47.88.50.110:15554 asdf_xraylarch_4b2b13697d_1 ./profile_xraylarch_4b2b13697d_1
+    - nosetests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_xraylarch_4b2b13697d_2
+    - python -m properform Push 47.88.50.110:15554 asdf_xraylarch_4b2b13697d_2 ./profile_xraylarch_4b2b13697d_2
 
 
- #2017-08-13 01:32:18 modified at 0 #2017-08-13 01:32:22 modified at 1
+ #2017-08-13 01:32:18 modified at 0 #2017-08-13 01:32:22 modified at 1 #2017-08-13 01:32:27 modified at 2
