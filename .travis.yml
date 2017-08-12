@@ -15,6 +15,9 @@ before_install:
     - export PATH=/home/travis/miniconda3/bin:$PATH
     - conda config --add channels https://conda.binstar.org/dan_blanchard
     - conda update --yes conda
+  # add for profile
+    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    - sudo apt-get update -qq
 
 install:
     - conda install --yes pip python=$TRAVIS_PYTHON_VERSION numpy scipy  wxpython h5py dateutil matplotlib nose 
@@ -23,8 +26,18 @@ install:
     - pip install wxutils
     - python setup.py build
     - python setup.py install
+# add for profile
+    - sudo apt-get install -qq g++-4.8
+    - export CXX="g++-4.8"
+    - pip install nose-cprof
+    - pip install properform
+
 
 script:
     - cd tests
-    - nosetests
+    - nosetests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_xraylarch_1804e18adc_0
+    - python -m properform Push 47.88.50.110:15554 asdf_xraylarch_1804e18adc_0 ./profile_xraylarch_1804e18adc_0
 
+
+
+ #2017-08-13 00:28:11 modified at 0
