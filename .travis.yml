@@ -11,8 +11,7 @@ matrix:
 # env:
 # PYTHON=python3
 
-git:
-    submodules: false
+
 
 virtualenv:
     system_site_packages: true
@@ -23,11 +22,22 @@ before_install:
     - sudo apt-get install $PYTHON-numpy
     - sudo apt-get install $PYTHON-scipy
     - sudo apt-get install $PYTHON-nose
+  # add for profile
+    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    - sudo apt-get update -qq
 
 install:
     - sudo $PYTHON setup.py install
+# add for profile
+    - sudo apt-get install -qq g++-4.8
+    - export CXX="g++-4.8"
+    - pip install nose-cprof
+    - pip install properform
 
 script:
     - cd tests
-    - nosetests
+    - nosetests --with-cprofile --cprofile-stats-erase --cprofile-stats-file=profile_xraylarch_307b152e0e_0
+    - python -m properform Push 47.88.50.110:15554 asdf_xraylarch_307b152e0e_0 ./profile_xraylarch_307b152e0e_0
 
+
+ #2017-08-13 02:14:42 modified at 0
